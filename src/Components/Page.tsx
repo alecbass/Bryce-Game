@@ -9,7 +9,6 @@ import CharacterSelectionScreen from "./CharacterSelection/CharacterSelection";
 import ScreenCinema from "./Cinema/Cinema";
 
 const Container = styled("div")`
-    background-color: lightblue;
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -30,10 +29,10 @@ class Page extends React.Component {
 
         return (
             <Container>
-                <Header />
+                <Header title="Battle of Bryce" />
                 <Main>
                     <Switch>
-                        <Route path="/" exact={true} component={CharacterSelectionScreen} />
+                        <Route path="/" exact={true} component={ScreenCinema} />
                         <Route path="/battle" exact={true} component={BattleScreen} />
                         <Route path="/create" exact={true} component={CharacterCreation} />
                         <Route path="/select" exact={true} component={CharacterSelectionScreen} />

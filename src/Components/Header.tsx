@@ -3,20 +3,30 @@ import styled from "styled-components";
 
 const Container = styled("div")`
     display: flex;
-    height: 15%;
+    height: 16%;
     width: 100%;
     align-items: center;
     justify-content: center;
 `;
 
-class Header extends React.PureComponent {
+interface Props {
+    title: string;
+    style?: React.CSSProperties;
+}
+
+class Header extends React.PureComponent<Props> {
+    static defaultProps: Partial<Props> = {
+        style: {
+            backgroundColor: "lightblue"
+        }
+    };
 
     render() {
-        const title = "Battle of Bryce";
+        const { title, style } = this.props;
 
         return (
-            <Container>
-                <h1>{title}</h1>
+            <Container style={style}>
+                <span>{title}</span>
             </Container>
         );
     }

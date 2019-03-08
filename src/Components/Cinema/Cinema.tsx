@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Video } from "src/Components";
+// import { Video } from "src/Components";
 import styled from "styled-components";
 
 const Screen = styled("div")`
@@ -14,11 +14,15 @@ const Input = styled("textarea")`
     flex: 1;
 `;
 
+interface Props {
+    placeholder?: string;
+}
+
 interface State {
     videoUrl: string;
 }
 
-class ScreenCinema extends React.PureComponent<{}, State> {
+class ScreenCinema extends React.PureComponent<Props, State> {
     state: State = {
         videoUrl: ""
     };
@@ -30,13 +34,14 @@ class ScreenCinema extends React.PureComponent<{}, State> {
     }
 
     render() {
+        const { placeholder } = this.props;
         const { videoUrl } = this.state;
-        console.log(this.screenRef);
+
         return (
             <Screen innerRef={ref => this.screenRef = ref}>
-                <Input onChange={this.handleUrlChange} />
+                <Input placeholder={placeholder} onChange={this.handleUrlChange} />
                 <p>Current URL: {videoUrl}</p>
-                <Video url={videoUrl} height={1000} width={this.screenRef ? this.screenRef.innerWidth - 64 : 1000} />
+                {/* <Video url={videoUrl} height={1000} width={this.screenRef ? this.screenRef.innerWidth - 64 : 1000} /> */}
             </Screen>
         )
     }
