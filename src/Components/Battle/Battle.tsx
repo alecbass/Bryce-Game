@@ -10,6 +10,8 @@ import * as actions from "src/Store/actions";
 import { State } from "src/Store";
 import { Ability } from "src/Interfaces/Ability";
 import { Item } from "src/Interfaces/Item";
+import Ratboy from "src/Images/ratboy.jpg";
+import { FighterContainer } from ".";
 
 const Screen = styled("div")`
     height: 100%;
@@ -21,6 +23,20 @@ const Screen = styled("div")`
     justify-content: center;
 
     background-color: black;
+`;
+
+const Container = styled("div")`
+    flex: 1;
+    height: 100%;
+    width: 100%;
+    background-image: url(${Ratboy});
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: white;
 `;
 
 interface ConnectProps {
@@ -97,7 +113,10 @@ class BattleScreen extends React.PureComponent<Props, BattleState> {
         return (
             <Screen>
                 <a href="/select">SELECT</a>
-                <BattleDisplay yourFighter={yourFighter} enemyFighter={enemyFighter} attack={this.attack} useItem={this.useItem} />
+                <BattleDisplay yourFighter={yourFighter} enemyFighter={enemyFighter} attack={this.attack} useItem={this.useItem}>
+                    <FighterContainer you={true} fighter={yourFighter} startAttack={this.attack} startUseItem={this.useItem} />
+                    <FighterContainer you={false} fighter={enemyFighter} startAttack={this.attack} startUseItem={this.useItem} />
+                </BattleDisplay>
                 <BattleLog fighters={fighters} />
             </Screen>
         );
