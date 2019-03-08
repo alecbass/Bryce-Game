@@ -57,15 +57,14 @@ class BattleDisplay extends React.PureComponent<Props> {
 
 
     render() {
-        const { yourFighter, enemyFighter } = this.props;
+        const { yourFighter, enemyFighter, children } = this.props;
         if (!yourFighter || !enemyFighter) {
             return <Container>No fighters</Container>;
         }
 
         return (
             <Container>
-                <FighterContainer you={true} fighter={yourFighter} startAttack={this.startAttack} startUseItem={this.startUseItem} />
-                <FighterContainer you={false} fighter={enemyFighter} startAttack={this.startAttack} startUseItem={this.startUseItem} />
+                {children}
             </Container>
         );
     }

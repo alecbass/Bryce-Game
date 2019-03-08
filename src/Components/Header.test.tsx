@@ -28,9 +28,11 @@ it("creates a header with text", () => {
 
     // surrounding div container
     expect(container).toBeInstanceOf(HTMLDivElement);
-    expect((container as HTMLDivElement).firstChild).toBeInstanceOf(HTMLDivElement);
-    expect((container as HTMLDivElement).firstChild).toBeEmpty;
-    expect(container.firstChild).toHaveStyle(`background-color: ${defaultProps.style!.backgroundColor}`);
+    const div = container.firstChild as HTMLDivElement;
+    expect(div).toBeInstanceOf(HTMLDivElement);
+    expect(div).toBeEmpty;
+    expect(div).toHaveStyle(`background-color: ${defaultProps.style!.backgroundColor}`);
+    expect(div).toHaveStyle("height: 16%");
     expect(container).toMatchSnapshot(`
         <div>
             <span>Main Header</span>

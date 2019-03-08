@@ -1,6 +1,6 @@
 import * as React from "react";
 
-// import { Video } from "src/Components";
+import { Video } from "src/Components";
 import styled from "styled-components";
 
 const Screen = styled("div")`
@@ -41,7 +41,7 @@ class ScreenCinema extends React.PureComponent<Props, State> {
             <Screen innerRef={ref => this.screenRef = ref}>
                 <Input placeholder={placeholder} onChange={this.handleUrlChange} />
                 <p>Current URL: {videoUrl}</p>
-                {/* <Video url={videoUrl} height={1000} width={this.screenRef ? this.screenRef.innerWidth - 64 : 1000} /> */}
+                <Video url={videoUrl} height={1000} width={this.screenRef ? this.screenRef.innerWidth - 64 : 1000} />
             </Screen>
         )
     }

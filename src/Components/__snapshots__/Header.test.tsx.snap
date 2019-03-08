@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`creates a header with text: 
+        <div>
+            <span>Main Header</span>
+        </div>
+     1`] = `
+<div>
+  <div
+    class="sc-bdVaJa eQDQwl"
+    style="background-color: red;"
+  >
+    <span>
+      Main Header
+    </span>
+  </div>
+</div>
+`;
