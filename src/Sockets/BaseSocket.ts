@@ -94,9 +94,7 @@ class BaseSocket {
     }
 
     send(data: string) {
-        console.log(this.ws);
         if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-            console.log("sending" + data);
             this.ws.send(data);
         }
     }

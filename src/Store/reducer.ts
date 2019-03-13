@@ -9,7 +9,7 @@ import Socket from "src/Sockets/Socket";
  */
 
 // Define our State interface for the current reducer
-export interface GameState {
+export interface Game {
   fighters: Fighter[];
   yourFighterIndex: number;
 };
@@ -38,12 +38,12 @@ const initialFighters = [
 ];
 
 // define initialState
-export const initialState: GameState = {
+export const initialState: Game = {
   fighters: [...initialFighters],
   yourFighterIndex: 0
 }
 
-export function reducer(state: GameState = initialState, action: Action) {
+export function reducer(state: Game = initialState, action: Action) {
     switch (action.type) {
   
       case ActionTypes.ADD_FIGHTER: {
@@ -100,24 +100,32 @@ export function reducer(state: GameState = initialState, action: Action) {
 
 // Messages
 
-export interface MessagesState {
+export interface Messages {
   messages: string[];
 }
 
 const initialMessages: string[] = ["First", "Second"];
 
-export const initialMessagesState: MessagesState = {
+export const initialMessagesState: Messages = {
   messages: [...initialMessages]
 }
 
-export function messagesReducer(state: MessagesState = initialMessagesState, action: MessageAction) {
+export function messagesReducer(state: Messages = initialMessagesState, action: MessageAction) {
   switch (action.type) {
     case MessageActionTypes.SEND_MESSAGE: {
       const { message } = action.payload;
       Socket.send(message);
-      console.log(Socket);
+
       return {
         ...state
+      }
+    }
+
+    case MessageActionTypes.RECEIVE_MESSAGE: {
+      const { message } = action.payload;
+      return {
+        ...state,
+        messages: [...state.messages, message]
       }
     }
 

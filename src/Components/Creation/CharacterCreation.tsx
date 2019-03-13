@@ -1,5 +1,5 @@
 import * as React from "react";
-import { GameState } from "src/Store/reducer";
+import { Game } from "src/Store/reducer";
 import { connect } from "react-redux";
 import { State } from "src/Store";
 import * as actions from "src/Store/actions";
@@ -7,7 +7,7 @@ import { Fighter } from "src/Interfaces/Fighter";
 
 
 interface ConnectProps {
-    game: GameState;
+    game: Game;
     dispatch?: any;
 }
 
@@ -39,4 +39,4 @@ class CharacterCreationScreen extends React.PureComponent<ConnectProps> {
     }
 }
 
-export default connect((state: State) => ({game: state.gameState}))(CharacterCreationScreen);
+export default connect((state: State) => ({game: state.Game}))(CharacterCreationScreen);

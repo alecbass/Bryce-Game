@@ -1,5 +1,8 @@
 import BaseSocket from "./BaseSocket";
 
+import store from "src/Store/index";
+import * as actions from "src/Store/actions";
+
 const url = "ws://192.168.0.4:3002";
 // const url = "ws://echo.websocket.org";
 
@@ -36,8 +39,21 @@ class WebSocketWrapper {
 
     handleMessage = (e: MessageEvent) => {
         try {
-            const message = JSON.parse(e.data);
-            console.log("Message: " + message);
+            const { data } = e;
+            console.log(data);
+            const messages = JSON.parse(data);
+            console.log(messages);
+            if (messages) {
+                messages.forEach(message => store.dispatch(actions.receiveMessage(message)));
+            } else {
+                if (typeof data === "string") {
+                    store.dispatch(actions.receiveMessage(data));
+                } else if (typeof data === "object" && "message" in Object.keys(data)) {
+                    store.dispatch(actions.receiveMessage(data.message));
+                } else {
+                    throw new Error("Bad message response: no message");
+                }
+            }
         } catch (e) {
             console.debug("Websocket message handling failed: ", e);
         }

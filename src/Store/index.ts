@@ -6,25 +6,25 @@ import * as fromReducer from "./reducer";
  * It contains every substate of the app
  */
 export interface State {
-  gameState: fromReducer.GameState;
-  messagesState: fromReducer.MessagesState;
+  Game: fromReducer.Game;
+  messages: fromReducer.Messages;
 }
 
 /*
  * initialState of the app
  */
 export const initialState: State = {
-  gameState: fromReducer.initialState,
-  messagesState: fromReducer.initialMessagesState
+  Game: fromReducer.initialState,
+  messages: fromReducer.initialMessagesState
 }
 
 /*
  * Root reducer of the app
- * Returned reducer will be of type Reducer<GameState>
+ * Returned reducer will be of type Reducer<Game>
  */
 export const reducer = combineReducers<State>({
-  gameState: fromReducer.reducer,
-  messagesState: fromReducer.messagesReducer
+  Game: fromReducer.reducer,
+  messages: fromReducer.messagesReducer
 })
 
 /*

@@ -109,10 +109,18 @@ export type Action = AddFighterAction | AttackFighterAction | ChangeFighterActio
 /** Messages */
 export enum MessageActionTypes {
     SEND_MESSAGE = "SEND_MESSAGE",
+    RECEIVE_MESSAGE = "RECEIVE_MESSAGE",
 }
 
 export interface SendMessageAction {
     type: MessageActionTypes.SEND_MESSAGE,
+    payload: {
+        message: string;
+    }
+}
+
+export interface ReceiveMessageAction {
+    type: MessageActionTypes.RECEIVE_MESSAGE,
     payload: {
         message: string;
     }
@@ -127,4 +135,13 @@ export function sendMessage(message: string): SendMessageAction {
     }
 }
 
-export type MessageAction = SendMessageAction;
+export function receiveMessage(message: string): ReceiveMessageAction {
+    return {
+        type: MessageActionTypes.RECEIVE_MESSAGE,
+        payload: {
+            message: message
+        }
+    }
+}
+
+export type MessageAction = SendMessageAction | ReceiveMessageAction;

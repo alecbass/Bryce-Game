@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { State } from "src/Store";
 import { Fighter } from "src/Interfaces/Fighter";
-import { GameState } from "src/Store/reducer";
+import { Game } from "src/Store/reducer";
 import CharacterIcon from "./CharacterIcon";
 import styled from "styled-components";
 import avatar from "src/Images/avatar.png";
@@ -48,7 +48,7 @@ const Image = styled("img")`
 `;
 
 interface ConnectProps {
-    game: GameState;
+    game: Game;
     dispatch?: any;
     history?: any;
 }
@@ -140,4 +140,4 @@ class CharacterSelectionScreen extends React.PureComponent<ConnectProps, Selecti
     }
 }
 
-export default connect((state: State) => ({game: state.gameState}))(CharacterSelectionScreen);
+export default connect((state: State) => ({game: state.Game}))(CharacterSelectionScreen);

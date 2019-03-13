@@ -5,7 +5,7 @@ import BattleDisplay from "./BattleDisplay";
 
 import { Fighter } from "src/Interfaces/Fighter";
 import { connect } from "react-redux";
-import { GameState } from "src/Store/reducer";
+import { Game } from "src/Store/reducer";
 import * as actions from "src/Store/actions";
 import { State } from "src/Store";
 import { Ability } from "src/Interfaces/Ability";
@@ -39,7 +39,7 @@ const Container = styled("div")`
 `;
 
 interface ConnectProps {
-    game: GameState;
+    game: Game;
     dispatch?: any;
     history?: any;
 };
@@ -122,4 +122,4 @@ class BattleScreen extends React.PureComponent<Props, BattleState> {
     }
 }
 
-export default connect((state: State) => ({game: state.gameState}))(BattleScreen);
+export default connect((state: State) => ({game: state.Game}))(BattleScreen);

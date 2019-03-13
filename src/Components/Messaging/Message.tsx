@@ -4,6 +4,8 @@ import { State } from "src/Store";
 import styled from "styled-components";
 import * as actions from "src/Store/actions";
 
+import socket from "src/Sockets/Socket";
+
 const MessageArea = styled("div")`
     display: flex;
     align-items: flex-start;
@@ -31,25 +33,40 @@ interface ConnectProps {
     dispatch: any;
 }
 
+interface ScreenMessageState {
+    handle: (e?: any) => void;
+}
+
 let key = 0;
 
 type Props = ConnectProps;
 
-class ScreenMessage extends React.PureComponent<Props> {
+class ScreenMessage extends React.PureComponent<Props, ScreenMessageState> {
+
     ref: HTMLInputElement | null;
+
+    componentWillMount() {
+        this.setState({ handle: socket.handleMessage });
+    }
 
     handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         const { dispatch } = this.props;
 
         if (e.key === "Enter" && this.ref && this.ref.value.length > 0) {
             const message = this.ref.value;
-            dispatch(actions.sendMessage(message));
             this.ref.value = "";
+
+            dispatch(actions.sendMessage(message));
         }
+    }
+
+    thing = (e) => {
+        console.log("Eeeeeeeeeeeeeeeee");
     }
 
     render() {
         const { messages } = this.props;
+
         return (
             <>
                 <MessageArea>
@@ -63,4 +80,4 @@ class ScreenMessage extends React.PureComponent<Props> {
     }
 }
 
-export default connect((state: State) => ({messages: state.messagesState.messages}))(ScreenMessage);
+export default connect((state: State) => ({messages: state.messages.messages}))(ScreenMessage);
