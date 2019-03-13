@@ -8,7 +8,7 @@ export enum ActionTypes {
     ATTACK_FIGHTER = "ATTACK_FIGHTER",
     ADD_FIGHTER = "ADD_FIGHTER",
     CHANGE_FIGHTER = "CHANGE_FIGHTER",
-    USE_ITEM = "USE_ITEM"
+    USE_ITEM = "USE_ITEM",
 };
 
 /*
@@ -104,3 +104,27 @@ export function useItem(user: Fighter, item: Item): UseItemAction {
  * It will be useful to tell typescript about our types in our reducer
  */
 export type Action = AddFighterAction | AttackFighterAction | ChangeFighterAction | UseItemAction;
+
+
+/** Messages */
+export enum MessageActionTypes {
+    SEND_MESSAGE = "SEND_MESSAGE",
+}
+
+export interface SendMessageAction {
+    type: MessageActionTypes.SEND_MESSAGE,
+    payload: {
+        message: string;
+    }
+}
+
+export function sendMessage(message: string): SendMessageAction {
+    return {
+        type: MessageActionTypes.SEND_MESSAGE,
+        payload: {
+            message: message
+        }
+    }
+}
+
+export type MessageAction = SendMessageAction;

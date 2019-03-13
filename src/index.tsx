@@ -7,7 +7,9 @@ import Page from 'src/Components/Page';
 import store from "src/Store/index";
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from "react-router-dom";
+import Socket from "src/Sockets/Socket";
 
+Socket.open();
 
 ReactDOM.render(
   <Provider store={store}>

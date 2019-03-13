@@ -7,13 +7,15 @@ import * as fromReducer from "./reducer";
  */
 export interface State {
   gameState: fromReducer.GameState;
+  messagesState: fromReducer.MessagesState;
 }
 
 /*
  * initialState of the app
  */
 export const initialState: State = {
-  gameState: fromReducer.initialState
+  gameState: fromReducer.initialState,
+  messagesState: fromReducer.initialMessagesState
 }
 
 /*
@@ -21,7 +23,8 @@ export const initialState: State = {
  * Returned reducer will be of type Reducer<GameState>
  */
 export const reducer = combineReducers<State>({
-  gameState: fromReducer.reducer
+  gameState: fromReducer.reducer,
+  messagesState: fromReducer.messagesReducer
 })
 
 /*

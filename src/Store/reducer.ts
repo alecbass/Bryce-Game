@@ -1,5 +1,6 @@
-import { ActionTypes, Action } from "./actions";
+import { ActionTypes, Action, MessageAction, MessageActionTypes } from "./actions";
 import { Fighter } from "src/Interfaces/Fighter";
+import Socket from "src/Sockets/Socket";
 
 /* 
  * Reducer takes 2 arguments
@@ -96,3 +97,32 @@ export function reducer(state: GameState = initialState, action: Action) {
       }
     }
   }
+
+// Messages
+
+export interface MessagesState {
+  messages: string[];
+}
+
+const initialMessages: string[] = ["First", "Second"];
+
+export const initialMessagesState: MessagesState = {
+  messages: [...initialMessages]
+}
+
+export function messagesReducer(state: MessagesState = initialMessagesState, action: MessageAction) {
+  switch (action.type) {
+    case MessageActionTypes.SEND_MESSAGE: {
+      const { message } = action.payload;
+      Socket.send(message);
+      console.log(Socket);
+      return {
+        ...state
+      }
+    }
+
+    default: {
+      return state;
+    }
+  }
+}

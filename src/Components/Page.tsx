@@ -7,6 +7,7 @@ import { Switch, Route, Link } from "react-router-dom";
 import CharacterCreation from "./Creation/CharacterCreation";
 import CharacterSelectionScreen from "./CharacterSelection/CharacterSelection";
 import ScreenCinema from "./Cinema/Cinema";
+import ScreenMessages from "./Messaging/Message";
 
 const Container = styled("div")`
     display: flex;
@@ -32,15 +33,17 @@ class Page extends React.Component {
                 <Header title="Battle of Bryce" />
                 <Main>
                     <Switch>
-                        <Route path="/" exact={true} component={ScreenCinema} />
+                        <Route path="/" exact={true} component={ScreenMessages} />
                         <Route path="/battle" exact={true} component={BattleScreen} />
                         <Route path="/create" exact={true} component={CharacterCreation} />
                         <Route path="/select" exact={true} component={CharacterSelectionScreen} />
                         <Route path="/cinema" exact={true} component={ScreenCinema} />
+                        <Route path="/messages" exact={true} component={ScreenMessages} />
                         <Link to="/battle">To battle</Link>
                         <Link to="/create">To create</Link>
                         <Link to="/select">To select</Link>
                         <Link to="/cinema">To cinema</Link>
+                        <Link to="/messages">To messages</Link>
                     </Switch>
                 </Main>
             </Container>
