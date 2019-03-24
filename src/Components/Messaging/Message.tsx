@@ -2,12 +2,15 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { State } from "src/Store";
 import styled from "styled-components";
-import * as actions from "src/Store/actions";
 
-import socket from "src/Sockets/Socket";
+import alec from "src/Images/me_orchestra.jpg";
+import { Message, YouMessage } from "src/Sockets/Api";
+import * as API  from "src/Sockets/Api";
+import { User } from "src/Store/reducer";
 
 const MessageArea = styled("div")`
     display: flex;
+    flex: 1;
     align-items: flex-start;
     justify-content: center;
     flex-direction: column;
@@ -28,56 +31,115 @@ const Input = styled("input")`
     width: 100%;
 `;
 
-interface ConnectProps {
-    messages: string[];
-    dispatch: any;
-}
+const Image = styled("img")`
+    display: flex;
+    align-self: center;
+    justify-self: center;
+`;
 
-interface ScreenMessageState {
-    handle: (e?: any) => void;
+interface ConnectProps {
+    me: User;
+    activeUsers: User[];
+    messages: Message[];
+    dispatch: any;
 }
 
 let key = 0;
 
 type Props = ConnectProps;
 
-class ScreenMessage extends React.PureComponent<Props, ScreenMessageState> {
+class ScreenMessage extends React.PureComponent<Props> {
 
+    nameInput: HTMLInputElement | null;
     ref: HTMLInputElement | null;
 
-    componentWillMount() {
-        this.setState({ handle: socket.handleMessage });
+    componentDidUpdate() {
+        if (this.ref) {
+            this.ref.focus();
+        }
     }
 
-    handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const { dispatch } = this.props;
+    submitName = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (!this.nameInput || e.key !== "Enter") {
+            return;
+        }
 
+        const name = this.nameInput.value;
+        if (name.length) {
+            const user: User = {
+                name: name
+            };
+
+            const message: YouMessage = {
+                type: "you",
+                payload: user,
+            };
+            await API.sendYouMessage(message);
+        }
+    }
+
+    handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && this.ref && this.ref.value.length > 0) {
             const message = this.ref.value;
             this.ref.value = "";
 
-            dispatch(actions.sendMessage(message));
+            const signon: Message = {
+                type: "message",
+                user: {
+                    name: name
+                },
+                payload: message
+            }
+            await API.sendChatMessage(signon);
         }
     }
 
-    thing = (e) => {
-        console.log("Eeeeeeeeeeeeeeeee");
+    renderMessage = (message: Message) => {
+        if (message.type !== "message") {
+            return;
+        }
+        if (!message.user) {
+            return <span>{message.payload}</span>
+        }
+        return (
+            <span>{message.user.name}: {message.payload}</span>
+        )
     }
 
     render() {
-        const { messages } = this.props;
+        const { me, messages, activeUsers } = this.props;
+        
+        if (!me.id || !me.name) {
+            return (
+                <>
+                    <span>Enter your name</span>
+                    <Input type="text" innerRef={ref => this.nameInput = ref} onKeyDown={this.submitName} />
+                </>
+            );
+        }
 
         return (
             <>
-                <MessageArea>
-                    {messages.map(m => (
-                        <Message key={key++}>{m}</Message>
-                    ))}
-                </MessageArea>
+                <span>Your name is: {me.name}</span>
+                <div style={{ display: "flex" }}>
+                    <MessageArea>
+                        {messages.map(m => (
+                            <Message key={key++}>{this.renderMessage(m)}</Message>
+                        ))}
+                    </MessageArea>
+                        <div style={{ display: "flex", flexDirection: "column", minWidth: "64px" }}>
+                            These bad boys have been on so far
+                            {activeUsers.map(user => <span key={key++}>{user.name}</span>)}
+                        </div>
+                    </div>
                 <Input type="text" innerRef={ref => this.ref = ref} onKeyDown={this.handleKeyDown} />
+                <h1>Send this picture to all your single friends!!!!!</h1>
+                <div style={{ display: "flex" }}>
+                    <Image src={alec} />
+                </div>
             </>
         );
     }
 }
 
-export default connect((state: State) => ({messages: state.messages.messages}))(ScreenMessage);
+export default connect((state: State) => ({ me: state.messages.me, activeUsers: state.messages.activeUsers, messages: state.messages.messages}))(ScreenMessage);

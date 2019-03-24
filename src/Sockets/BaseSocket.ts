@@ -44,7 +44,6 @@ class BaseSocket {
         this.ws = new WebSocket(this.url, this.options.protocols || []);
 
         this.ws.onmessage = eventWrapper(e => {
-            console.log(e);
             if (this.options.onMessage) {
                 this.options.onMessage(e);
             }

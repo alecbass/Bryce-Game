@@ -1,6 +1,7 @@
 import { ActionTypes, Action, MessageAction, MessageActionTypes } from "./actions";
 import { Fighter } from "src/Interfaces/Fighter";
 import Socket from "src/Sockets/Socket";
+import { Message } from "src/Sockets/Api";
 
 /* 
  * Reducer takes 2 arguments
@@ -100,32 +101,101 @@ export function reducer(state: Game = initialState, action: Action) {
 
 // Messages
 
-export interface Messages {
-  messages: string[];
+export interface User {
+  id?: number;
+  name?: string;
 }
 
-const initialMessages: string[] = ["First", "Second"];
+export interface Messages {
+  me: User;
+  activeUsers: User[];
+  messages: Message[];
+}
 
 export const initialMessagesState: Messages = {
-  messages: [...initialMessages]
+  me: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : {},
+  activeUsers: [],
+  messages: []
 }
 
 export function messagesReducer(state: Messages = initialMessagesState, action: MessageAction) {
   switch (action.type) {
-    case MessageActionTypes.SEND_MESSAGE: {
-      const { message } = action.payload;
-      Socket.send(message);
+    // case MessageActionTypes.SEND_MESSAGE: {
+    //   const { message } = action.payload;
+    //   Socket.send(message);
 
-      return {
-        ...state
-      }
-    }
+    //   return {
+    //     ...state
+    //   }
+    // }
 
     case MessageActionTypes.RECEIVE_MESSAGE: {
       const { message } = action.payload;
+
+      if (message.type === "signon") {
+        if (Array.isArray(message.payload)) {
+          const newUsers: User[] = [];
+          (message.payload as User[]).forEach(user => newUsers.push(user));
+          return {
+            ...state,
+            activeUsers: [...state.activeUsers, ...newUsers]
+          }
+        } else {
+          return {
+            ...state,
+            me: message.user || {},
+            activeUsers: [...state.activeUsers , message.user || {}]
+          }
+        }
+      }
+
+      else if (message.type === "message") {
+        if (Array.isArray(message.payload)) {
+          const result: Message = {
+            type: message.type,
+            user: message.user,
+            payload: message.payload as string[]
+          };
+          return {
+            ...state,
+            messages: [...state.messages, result]
+          }
+        } else {
+          const result: Message = {
+            type: message.type,
+            user: message.user,
+            payload: message.payload as string
+          };
+          return {
+            ...state,
+            messages: [...state.messages, result]
+          }
+        }
+      }
+
+      else if (message.type === "refresh") {
+        return {
+          ...state,
+          activeUsers: [...message.payload as User[]]
+        }
+      }
+
+      else if (message.type === "you") {
+        if (!message.user) {
+          return {
+            ...state,
+          }
+        }
+
+        localStorage.setItem("user", JSON.stringify(message.user as User));
+        return {
+          ...state,
+          me: message.user
+        }
+      }
+
       return {
-        ...state,
-        messages: [...state.messages, message]
+        ...state
       }
     }
 

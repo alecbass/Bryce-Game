@@ -1,6 +1,7 @@
 import { Fighter } from "src/Interfaces/Fighter";
 import { Ability } from "src/Interfaces/Ability";
 import { Item } from "src/Interfaces/Item";
+import { BaseMessage } from "src/Sockets/Api";
 
 let nextId = 0;
 
@@ -108,40 +109,42 @@ export type Action = AddFighterAction | AttackFighterAction | ChangeFighterActio
 
 /** Messages */
 export enum MessageActionTypes {
-    SEND_MESSAGE = "SEND_MESSAGE",
+    // SEND_MESSAGE = "SEND_MESSAGE",
     RECEIVE_MESSAGE = "RECEIVE_MESSAGE",
+    // SIGNON = "SIGNON",
 }
 
-export interface SendMessageAction {
-    type: MessageActionTypes.SEND_MESSAGE,
-    payload: {
-        message: string;
-    }
-}
+// export interface SendMessageAction {
+//     type: MessageActionTypes.SEND_MESSAGE,
+//     payload: {
+//         message: BaseMessage;
+//     }
+// }
 
 export interface ReceiveMessageAction {
     type: MessageActionTypes.RECEIVE_MESSAGE,
     payload: {
-        message: string;
+        message: BaseMessage;
     }
 }
 
-export function sendMessage(message: string): SendMessageAction {
-    return {
-        type: MessageActionTypes.SEND_MESSAGE,
-        payload: {
-            message: message
-        }
-    }
-}
 
-export function receiveMessage(message: string): ReceiveMessageAction {
+// export function sendMessage(message: BaseMessage): SendMessageAction {
+//     return {
+//         type: MessageActionTypes.SEND_MESSAGE,
+//         payload: {
+//             message: message
+//         }
+//     }
+// }
+
+export function receiveMessage(message: BaseMessage): ReceiveMessageAction {
     return {
         type: MessageActionTypes.RECEIVE_MESSAGE,
         payload: {
-            message: message
+            message
         }
     }
 }
 
-export type MessageAction = SendMessageAction | ReceiveMessageAction;
+export type MessageAction = ReceiveMessageAction;

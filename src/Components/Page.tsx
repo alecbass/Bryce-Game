@@ -8,6 +8,10 @@ import CharacterCreation from "./Creation/CharacterCreation";
 import CharacterSelectionScreen from "./CharacterSelection/CharacterSelection";
 import ScreenCinema from "./Cinema/Cinema";
 import ScreenMessages from "./Messaging/Message";
+import { connect } from "react-redux";
+import { State } from "src/Store";
+import { User } from "src/Store/reducer";
+import Socket from "src/Sockets/Socket";
 
 const Container = styled("div")`
     display: flex;
@@ -24,7 +28,11 @@ const Main = styled("div")`
     padding: 4% 8% 4% 8%;
 `;
 
-class Page extends React.Component {
+interface Props {
+    me: User;
+}
+
+class Page extends React.Component<Props> {
 
     render() {
 
@@ -51,4 +59,4 @@ class Page extends React.Component {
     }
 }
 
-export default Page;
+export default connect((state: State) => ({ me: state.messages.me }))(Page);
