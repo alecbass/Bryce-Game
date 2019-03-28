@@ -1,4 +1,4 @@
-interface PersistentWebSocketOptions {
+interface BaseWebSocketOptions {
     protocols?: string | string[];
     timeout?: number;
     onOpen?: (e: Event) => any;
@@ -13,11 +13,11 @@ const CLOSE_NORMAL = 4000;
 const DEFAULT_RECONNECT_TIME = 5000;
 
 class BaseSocket {
-    constructor(private url: string, options?: PersistentWebSocketOptions) {
+    constructor(private url: string, options?: BaseWebSocketOptions) {
         this.options = options || {};
     }
 
-    private options: PersistentWebSocketOptions;
+    private options: BaseWebSocketOptions;
     private ws?: WebSocket;
     private timeout?: NodeJS.Timer;
 

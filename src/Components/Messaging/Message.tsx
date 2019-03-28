@@ -4,7 +4,7 @@ import { State } from "src/Store";
 import styled from "styled-components";
 
 import alec from "src/Images/me_orchestra.jpg";
-import { Message, YouMessage } from "src/Sockets/Api";
+import { Message, LoginMessage } from "src/Sockets/Api";
 import * as API  from "src/Sockets/Api";
 import { User } from "src/Store/reducer";
 
@@ -48,10 +48,23 @@ let key = 0;
 
 type Props = ConnectProps;
 
-class ScreenMessage extends React.PureComponent<Props> {
-
+class ScreenMessage extends React.PureComponent<Props, { showMe: boolean; }> {
+    state = {
+        showMe: false
+    };
     nameInput: HTMLInputElement | null;
     ref: HTMLInputElement | null;
+
+    componentWillMount() {
+        const { me } = this.props;
+        if (me) {
+            const loginMessage: LoginMessage = {
+                type: "login",
+                payload: me
+            };
+            API.sendLoginMessage(loginMessage);
+        }
+    }
 
     componentDidUpdate() {
         if (this.ref) {
@@ -70,27 +83,27 @@ class ScreenMessage extends React.PureComponent<Props> {
                 name: name
             };
 
-            const message: YouMessage = {
-                type: "you",
+            const message: LoginMessage = {
+                type: "login",
                 payload: user,
             };
-            await API.sendYouMessage(message);
+            API.sendLoginMessage(message);
         }
     }
 
     handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+        const { me } = this.props;
         if (e.key === "Enter" && this.ref && this.ref.value.length > 0) {
             const message = this.ref.value;
             this.ref.value = "";
 
             const signon: Message = {
                 type: "message",
-                user: {
-                    name: name
-                },
+                user: me,
                 payload: message
             }
-            await API.sendChatMessage(signon);
+
+            API.sendChatMessage(signon);
         }
     }
 
@@ -98,17 +111,20 @@ class ScreenMessage extends React.PureComponent<Props> {
         if (message.type !== "message") {
             return;
         }
+        // console.log(message);
         if (!message.user) {
             return <span>{message.payload}</span>
         }
+
         return (
             <span>{message.user.name}: {message.payload}</span>
-        )
+        );
     }
 
     render() {
         const { me, messages, activeUsers } = this.props;
-        
+        const { showMe } = this.state;
+
         if (!me.id || !me.name) {
             return (
                 <>
@@ -120,6 +136,7 @@ class ScreenMessage extends React.PureComponent<Props> {
 
         return (
             <>
+                <button onClick={() => { localStorage.clear(); location.reload(); }}>Clear localStorage</button>
                 <span>Your name is: {me.name}</span>
                 <div style={{ display: "flex" }}>
                     <MessageArea>
@@ -128,15 +145,19 @@ class ScreenMessage extends React.PureComponent<Props> {
                         ))}
                     </MessageArea>
                         <div style={{ display: "flex", flexDirection: "column", minWidth: "64px" }}>
-                            These bad boys have been on so far
+                            These bad boys are on currently
                             {activeUsers.map(user => <span key={key++}>{user.name}</span>)}
                         </div>
                     </div>
                 <Input type="text" innerRef={ref => this.ref = ref} onKeyDown={this.handleKeyDown} />
-                <h1>Send this picture to all your single friends!!!!!</h1>
-                <div style={{ display: "flex" }}>
-                    <Image src={alec} />
-                </div>
+                {showMe && (
+                    <>
+                    <h1>Send this picture to all your single friends!!!!!</h1>
+                    <div style={{ display: "flex" }}>
+                        <Image src={alec} />
+                    </div>
+                    </>
+                )}
             </>
         );
     }

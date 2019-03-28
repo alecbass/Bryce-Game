@@ -2,9 +2,9 @@ import Socket from "./Socket";
 import { User } from "src/Store/reducer";
 
 export interface BaseMessage {
-    type: "signon" | "message" | "signoff" | "refresh" | "you";
+    type: "signon" | "message" | "signoff" | "refresh" | "login";
     user?: User;
-    payload: string | string[] | User | User[];
+    payload: string | string[] | User | User[] | Message[];
 }
 
 export interface SignonMessage extends BaseMessage {
@@ -12,7 +12,7 @@ export interface SignonMessage extends BaseMessage {
     payload: string | User;
 }
 
-export async function sendSignon(message: SignonMessage) {
+export async function sendSignonMessage(message: SignonMessage) {
     Socket.send(message);
 }
 
@@ -33,11 +33,11 @@ export async function sendRefreshMessage(message: RefreshMessage) {
     Socket.send(message);
 }
 
-export interface YouMessage extends BaseMessage {
-    type: "you";
+export interface LoginMessage extends BaseMessage {
+    type: "login";
     payload: User;
 }
 
-export async function sendYouMessage(message: YouMessage) {
+export async function sendLoginMessage(message: LoginMessage) {
     Socket.send(message);
 }

@@ -1,6 +1,5 @@
 import { ActionTypes, Action, MessageAction, MessageActionTypes } from "./actions";
 import { Fighter } from "src/Interfaces/Fighter";
-import Socket from "src/Sockets/Socket";
 import { Message } from "src/Sockets/Api";
 
 /* 
@@ -143,22 +142,23 @@ export function messagesReducer(state: Messages = initialMessagesState, action: 
         } else {
           return {
             ...state,
-            me: message.user || {},
             activeUsers: [...state.activeUsers , message.user || {}]
           }
         }
       }
 
+      else if (message.type === "signoff") {
+        return {
+          ...state,
+          activeUsers: [...state.activeUsers.filter(user => user.id !== (message.payload as User).id)]
+        }
+      }
+
       else if (message.type === "message") {
         if (Array.isArray(message.payload)) {
-          const result: Message = {
-            type: message.type,
-            user: message.user,
-            payload: message.payload as string[]
-          };
           return {
             ...state,
-            messages: [...state.messages, result]
+            messages: [...state.messages, ...message.payload as Message[]]
           }
         } else {
           const result: Message = {
@@ -174,19 +174,19 @@ export function messagesReducer(state: Messages = initialMessagesState, action: 
       }
 
       else if (message.type === "refresh") {
+        // set the new users to whatever the new list is
         return {
           ...state,
-          activeUsers: [...message.payload as User[]]
+          activeUsers: [...(message.payload as User[])]
         }
       }
 
-      else if (message.type === "you") {
+      else if (message.type === "login") {
         if (!message.user) {
           return {
             ...state,
           }
         }
-
         localStorage.setItem("user", JSON.stringify(message.user as User));
         return {
           ...state,

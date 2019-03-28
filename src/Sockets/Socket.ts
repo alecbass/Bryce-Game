@@ -4,8 +4,8 @@ import store from "src/Store/index";
 import * as actions from "src/Store/actions";
 import { BaseMessage } from "./Api";
 
-const url ="ws://192.168.0.4:3002";
-// const url = "ws://101.165.152.52:3002";
+// const url ="ws://192.168.0.4:3002";
+const url = "ws://101.165.152.52:3002";
 // const url = "ws://echo.websocket.org";
 
 class WebSocketWrapper {
