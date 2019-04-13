@@ -1,16 +1,17 @@
 import * as React from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import BattleLog from "./BattleLog";
 import BattleDisplay from "./BattleDisplay";
 
-import { Fighter } from "src/Interfaces/Fighter";
+import { Fighter } from "Interfaces/Fighter";
 import { connect } from "react-redux";
-import { Game } from "src/Store/reducer";
-import * as actions from "src/Store/actions";
-import { State } from "src/Store";
-import { Ability } from "src/Interfaces/Ability";
-import { Item } from "src/Interfaces/Item";
-import Ratboy from "src/Images/ratboy.jpg";
+import { Game } from "Store/reducer";
+import * as actions from "Store/actions";
+import { State } from "Store";
+import { Ability } from "Interfaces/Ability";
+import { Item } from "Interfaces/Item";
+
+const ratboy = require("Images/ratboy.jpg");
 
 const Screen = styled("div")`
     height: 100%;
@@ -28,7 +29,7 @@ const Container = styled("div")`
     flex: 1;
     height: 100%;
     width: 100%;
-    background-image: url(${Ratboy});
+    background-image: url(${ratboy});
 
     display: flex;
     flex-direction: row;

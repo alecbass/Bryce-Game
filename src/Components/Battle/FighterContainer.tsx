@@ -1,10 +1,10 @@
 import * as React from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { Button, Progress } from "reactstrap";
-import { Fighter } from "src/Interfaces/Fighter";
+import { Fighter } from "Interfaces/Fighter";
 import Details from "./Details";
-import { Ability } from "src/Interfaces/Ability";
-import { Item } from "src/Interfaces/Item";
+import { Ability } from "Interfaces/Ability";
+import { Item } from "Interfaces/Item";
 
 
 interface ContainerProps {
@@ -20,7 +20,7 @@ const Wrapper = styled("div")`
     max-width: 24%;
 `;
 
-const Container = styled<ContainerProps, "div">("div")`
+const Container = styled<"div", ContainerProps>("div")`
     display: flex;
     flex: 1;
     width: 100%;

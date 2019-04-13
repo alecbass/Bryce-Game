@@ -1,6 +1,6 @@
 import * as React from "react";
-import styled from "styled-components";
-import { Fighter } from "src/Interfaces/Fighter";
+import styled from "@emotion/styled";
+import { Fighter } from "Interfaces/Fighter";
 
 const Container = styled("div")`
     height: 25%;

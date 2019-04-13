@@ -1,12 +1,12 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { State } from "src/Store";
-import styled from "styled-components";
+import { State } from "Store";
+import styled from "@emotion/styled";
+import { Message, LoginMessage } from "Sockets/Api";
+import { API } from "Sockets";
+import { User } from "Store/reducer";
 
-import alec from "src/Images/me_orchestra.jpg";
-import { Message, LoginMessage } from "src/Sockets/Api";
-import * as API  from "src/Sockets/Api";
-import { User } from "src/Store/reducer";
+const alec = require("../../Images/me_orchestra.jpg");
 
 const MessageArea = styled("div")`
     display: flex;
@@ -14,6 +14,8 @@ const MessageArea = styled("div")`
     align-items: flex-start;
     justify-content: center;
     flex-direction: column;
+    max-height: 80%;
+    overflow-y: scroll;
 
     background-color: gray;
 `;
@@ -44,25 +46,32 @@ interface ConnectProps {
     dispatch: any;
 }
 
-let key = 0;
-
 type Props = ConnectProps;
 
 class ScreenMessage extends React.PureComponent<Props, { showMe: boolean; }> {
     state = {
         showMe: false
     };
-    nameInput: HTMLInputElement | null;
-    ref: HTMLInputElement | null;
+    nameInput: HTMLInputElement | null = null;
+    ref: HTMLInputElement | null = null;
+    messageAreaRef: HTMLDivElement | null = null;
 
-    componentWillMount() {
+    componentDidMount() {
         const { me } = this.props;
+        console.log(this.props);
         if (me) {
-            const loginMessage: LoginMessage = {
-                type: "login",
-                payload: me
-            };
-            API.sendLoginMessage(loginMessage);
+            // const loginMessage: LoginMessage = {
+            //     type: "login",
+            //     user: me,
+            //     payload: me
+            // };
+            // API.sendLoginMessage(loginMessage);
+        }
+    }
+
+    componentWillReceiveProps() {
+        if (this.messageAreaRef) {
+            this.messageAreaRef.scrollTop = this.messageAreaRef.scrollHeight;
         }
     }
 
@@ -129,27 +138,27 @@ class ScreenMessage extends React.PureComponent<Props, { showMe: boolean; }> {
             return (
                 <>
                     <span>Enter your name</span>
-                    <Input type="text" innerRef={ref => this.nameInput = ref} onKeyDown={this.submitName} />
+                    <Input type="text" ref={ref => this.nameInput = ref} onKeyDown={this.submitName} />
                 </>
             );
         }
 
         return (
             <>
-                <button onClick={() => { localStorage.clear(); location.reload(); }}>Clear localStorage</button>
+                <button onClick={() => { localStorage.clear(); location.reload(); }} style={{ width: 128 }}>Clear localStorage</button>
                 <span>Your name is: {me.name}</span>
-                <div style={{ display: "flex" }}>
-                    <MessageArea>
-                        {messages.map(m => (
-                            <Message key={key++}>{this.renderMessage(m)}</Message>
+                <div style={{ display: "flex", maxHeight: "64%" }}>
+                    <MessageArea ref={ref => this.messageAreaRef = ref}>
+                        {messages.map((m, index) => (
+                            <Message key={index} >{this.renderMessage(m)}</Message>
                         ))}
                     </MessageArea>
                         <div style={{ display: "flex", flexDirection: "column", minWidth: "64px" }}>
                             These bad boys are on currently
-                            {activeUsers.map(user => <span key={key++}>{user.name}</span>)}
+                            {activeUsers.map((user, index) => <span key={index}>{user.name}</span>)}
                         </div>
                     </div>
-                <Input type="text" innerRef={ref => this.ref = ref} onKeyDown={this.handleKeyDown} />
+                <Input type="text" ref={ref => this.ref = ref} onKeyDown={this.handleKeyDown} />
                 {showMe && (
                     <>
                     <h1>Send this picture to all your single friends!!!!!</h1>

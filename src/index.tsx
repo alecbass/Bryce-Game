@@ -3,13 +3,13 @@ import * as ReactDOM from 'react-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import registerServiceWorker from './registerServiceWorker';
-import Page from 'src/Components/Page';
-import store from "src/Store/index";
+import { Page } from "./Components";
+import store from "./Store/index";
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from "react-router-dom";
-import Socket from "src/Sockets/Socket";
+import { socket } from "./Sockets";
 
-Socket.open();
+socket.open();
 
 ReactDOM.render(
   <Provider store={store}>
@@ -17,6 +17,6 @@ ReactDOM.render(
       <Page />
     </Router>
   </Provider>,
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 registerServiceWorker();

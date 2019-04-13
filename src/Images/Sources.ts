@@ -1,9 +1,9 @@
-import Bryce from "./bryce.jpg";
-import Joe from "./joe.jpg";
+const bryce = require("./bryce.jpg");
+const joe = require("./joe.jpg");
 
 export const FighterImages = [
-    Bryce, 
-    Joe
+    bryce, 
+    joe
 ];
 
 export default FighterImages;

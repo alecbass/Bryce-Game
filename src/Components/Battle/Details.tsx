@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Fighter } from "src/Interfaces/Fighter";
-import styled from "styled-components";
+import { Fighter } from "Interfaces/Fighter";
+import styled from "@emotion/styled";
 
 const Wrapper = styled("div")`
 `;

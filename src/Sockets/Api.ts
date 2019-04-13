@@ -1,5 +1,5 @@
 import Socket from "./Socket";
-import { User } from "src/Store/reducer";
+import { User } from "Store/reducer";
 
 export interface BaseMessage {
     type: "signon" | "message" | "signoff" | "refresh" | "login";
@@ -39,5 +39,7 @@ export interface LoginMessage extends BaseMessage {
 }
 
 export async function sendLoginMessage(message: LoginMessage) {
+    console.log("sending htis lgin message");
+    console.log(message);
     Socket.send(message);
 }

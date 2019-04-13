@@ -1,7 +1,7 @@
-import { Fighter } from "src/Interfaces/Fighter";
-import { Ability } from "src/Interfaces/Ability";
-import { Item } from "src/Interfaces/Item";
-import { BaseMessage } from "src/Sockets/Api";
+import { Fighter } from "Interfaces/Fighter";
+import { Ability } from "Interfaces/Ability";
+import { Item } from "Interfaces/Item";
+import { API } from "Sockets";
 
 let nextId = 0;
 
@@ -124,7 +124,7 @@ export enum MessageActionTypes {
 export interface ReceiveMessageAction {
     type: MessageActionTypes.RECEIVE_MESSAGE,
     payload: {
-        message: BaseMessage;
+        message: API.BaseMessage;
     }
 }
 
@@ -138,7 +138,7 @@ export interface ReceiveMessageAction {
 //     }
 // }
 
-export function receiveMessage(message: BaseMessage): ReceiveMessageAction {
+export function receiveMessage(message: API.BaseMessage): ReceiveMessageAction {
     return {
         type: MessageActionTypes.RECEIVE_MESSAGE,
         payload: {

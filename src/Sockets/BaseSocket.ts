@@ -50,12 +50,14 @@ class BaseSocket {
         });
 
         this.ws.onopen = eventWrapper(e => {
+            console.log("ws open");
             if (this.options.onOpen) {
                 this.options.onOpen(e);
             }
         });
 
         this.ws.onclose = eventWrapper(e => {
+            console.log("ws close");
             if (this.options.onClose) {
                 this.options.onClose(e);
             }
@@ -66,6 +68,7 @@ class BaseSocket {
         });
 
         this.ws.onerror = eventWrapper(e => {
+            console.log("ws error");
             if (this.options.onError) {
                 this.options.onError(e);
             }

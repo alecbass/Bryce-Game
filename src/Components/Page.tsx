@@ -1,17 +1,17 @@
 import * as React from "react";
 import "../index.css";
-import styled from "styled-components";
-import { Header } from "src/Components";
-import BattleScreen from "./Battle/Battle";
+import styled from "@emotion/styled";
+import { Header } from "Components";
+import BattleScreen from "Components/Battle/Battle";
 import { Switch, Route, Link } from "react-router-dom";
-import CharacterCreation from "./Creation/CharacterCreation";
-import CharacterSelectionScreen from "./CharacterSelection/CharacterSelection";
+import CharacterCreation from "Components/Creation/CharacterCreation";
+import CharacterSelectionScreen from "Components/CharacterSelection/CharacterSelection";
 import ScreenCinema from "./Cinema/Cinema";
 import ScreenMessages from "./Messaging/Message";
+import ScreenMap from "Components//Map/Map";
 import { connect } from "react-redux";
-import { State } from "src/Store";
-import { User } from "src/Store/reducer";
-import Socket from "src/Sockets/Socket";
+import { State } from "Store";
+import { User } from "Store/reducer";
 
 const Container = styled("div")`
     display: flex;
@@ -25,6 +25,8 @@ const Main = styled("div")`
     flex: 1;
     background-color: lightgreen;
 
+    display: flex;
+    flex-direction: column;
     padding: 4% 8% 4% 8%;
 `;
 
@@ -47,11 +49,13 @@ class Page extends React.Component<Props> {
                         <Route path="/select" exact={true} component={CharacterSelectionScreen} />
                         <Route path="/cinema" exact={true} component={ScreenCinema} />
                         <Route path="/messages" exact={true} component={ScreenMessages} />
+                        <Route path="/map" exact={true} component={ScreenMap} />
                         <Link to="/battle">To battle</Link>
                         <Link to="/create">To create</Link>
                         <Link to="/select">To select</Link>
                         <Link to="/cinema">To cinema</Link>
                         <Link to="/messages">To messages</Link>
+                        <Link to="/map">To map</Link>
                     </Switch>
                 </Main>
             </Container>

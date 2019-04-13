@@ -1,19 +1,18 @@
 import * as React from "react";
-import styled from "styled-components";
-import FighterContainer from "./FighterContainer";
+import styled from "@emotion/styled";
 
 // import Bryce from "src/Images/bryce.jpg";
 // import Joe from "src/Images/joe.jpg";
-import Ratboy from "src/Images/ratboy.jpg";
-import { Fighter } from "src/Interfaces/Fighter";
-import { Ability } from "src/Interfaces/Ability";
-import { Item } from "src/Interfaces/Item";
+const ratboy = require("Images/ratboy.jpg");
+import { Fighter } from "Interfaces/Fighter";
+import { Ability } from "Interfaces/Ability";
+import { Item } from "Interfaces/Item";
 
 const Container = styled("div")`
     flex: 1;
     height: 100%;
     width: 100%;
-    background-image: url(${Ratboy});
+    background-image: url(${ratboy});
 
     display: flex;
     flex-direction: row;

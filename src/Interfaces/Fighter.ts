@@ -1,7 +1,7 @@
-import avatar from "src/Images/avatar.png";
 import { Ability, AbilityType } from "./Ability";
 import { Item, ItemType } from "./Item";
-import { ENGINE_METHOD_ALL } from "constants";
+
+const avatar = require("Images/avatar.png");
 
 export class Fighter {
     

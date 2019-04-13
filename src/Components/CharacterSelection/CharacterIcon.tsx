@@ -1,12 +1,12 @@
 import * as React from "react";
-import { Fighter } from "src/Interfaces/Fighter";
-import styled from "styled-components";
+import { Fighter } from "Interfaces/Fighter";
+import styled from "@emotion/styled";
 
 interface IconProps {
     backgroundImage?: string;
 }
 
-const Icon = styled<IconProps, "div">("div")`
+const Icon = styled<"div", IconProps>("div")`
     height: 128px;
     width: 128px;
     min-height: 128px;

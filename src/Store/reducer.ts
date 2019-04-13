@@ -1,6 +1,6 @@
 import { ActionTypes, Action, MessageAction, MessageActionTypes } from "./actions";
-import { Fighter } from "src/Interfaces/Fighter";
-import { Message } from "src/Sockets/Api";
+import { Fighter } from "Interfaces/Fighter";
+import { API } from "Sockets";
 
 /* 
  * Reducer takes 2 arguments
@@ -108,7 +108,7 @@ export interface User {
 export interface Messages {
   me: User;
   activeUsers: User[];
-  messages: Message[];
+  messages: API.Message[];
 }
 
 export const initialMessagesState: Messages = {
@@ -142,7 +142,7 @@ export function messagesReducer(state: Messages = initialMessagesState, action: 
         } else {
           return {
             ...state,
-            activeUsers: [...state.activeUsers , message.user || {}]
+            activeUsers: message.user? [...state.activeUsers , message.user] : [...state.activeUsers]
           }
         }
       }
@@ -158,10 +158,10 @@ export function messagesReducer(state: Messages = initialMessagesState, action: 
         if (Array.isArray(message.payload)) {
           return {
             ...state,
-            messages: [...state.messages, ...message.payload as Message[]]
+            messages: [...state.messages, ...message.payload as API.Message[]]
           }
         } else {
-          const result: Message = {
+          const result: API.Message = {
             type: message.type,
             user: message.user,
             payload: message.payload as string
@@ -182,6 +182,8 @@ export function messagesReducer(state: Messages = initialMessagesState, action: 
       }
 
       else if (message.type === "login") {
+        console.log("got a login message");
+        console.log(message);
         if (!message.user) {
           return {
             ...state,

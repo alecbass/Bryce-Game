@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Game } from "src/Store/reducer";
+import { Game } from "Store/reducer";
 import { connect } from "react-redux";
-import { State } from "src/Store";
-import * as actions from "src/Store/actions";
-import { Fighter } from "src/Interfaces/Fighter";
+import { State } from "Store";
+import * as actions from "Store/actions";
+import { Fighter } from "Interfaces/Fighter";
 
 
 interface ConnectProps {
@@ -12,7 +12,7 @@ interface ConnectProps {
 }
 
 class CharacterCreationScreen extends React.PureComponent<ConnectProps> {
-    nameInput: HTMLInputElement | null;
+    nameInput: HTMLInputElement | null = null;
 
     makeCharacter = (e: any) => {
         const { dispatch, game } = this.props;

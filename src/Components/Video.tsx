@@ -1,5 +1,5 @@
 import * as React from "react";
-import YouTube from "react-youtube";
+import YouTube, { Options } from "react-youtube";
 
 interface Props {
     url: string;
@@ -27,9 +27,9 @@ class VideoComponent extends React.PureComponent<Props> {
     render() {
         const { url, height, width } = this.props;
 
-        const opts = {
-            height: height || "1000",
-            width: width || "640",
+        const opts: Options = {
+            height: height && height.toString() || "1000",
+            width: width && width.toString() || "640",
             playerVars: { // https://developers.google.com/youtube/player_parameters
               autoplay: 0,
               disablekb: 1

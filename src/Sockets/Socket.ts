@@ -1,8 +1,8 @@
 import BaseSocket from "./BaseSocket";
 
-import store from "src/Store/index";
-import * as actions from "src/Store/actions";
-import { BaseMessage } from "./Api";
+import store from "../Store/index";
+import * as actions from "../Store/actions";
+import { API } from "../Sockets";
 
 // const url ="ws://192.168.0.4:3002";
 const url = "ws://101.165.152.52:3002";
@@ -30,14 +30,14 @@ class WebSocketWrapper {
         this.ws.close();
     }
 
-    send(message: BaseMessage) {
+    send(message: API.BaseMessage) {
         this.ws.json(message);
     }
 
     handleMessage = (e: MessageEvent) => {
         try {
             const { data } = e;
-            let messages = JSON.parse(data) as BaseMessage;
+            let messages = JSON.parse(data) as API.BaseMessage;
             store.dispatch(actions.receiveMessage(messages));
         } catch (e) {
             console.debug("Websocket message handling failed: ", e);

@@ -1,13 +1,14 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { State } from "src/Store";
-import { Fighter } from "src/Interfaces/Fighter";
-import { Game } from "src/Store/reducer";
+import { State } from "Store";
+import { Fighter } from "Interfaces/Fighter";
+import { Game } from "Store/reducer";
 import CharacterIcon from "./CharacterIcon";
-import styled from "styled-components";
-import avatar from "src/Images/avatar.png";
+import styled from "@emotion/styled";
 import { Button } from "reactstrap";
-import * as actions from "src/Store/actions";
+import * as actions from "Store/actions";
+
+const avatar = require("Images/avatar.png");
 
 const Container = styled("div")`
     display: flex;
