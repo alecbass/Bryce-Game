@@ -46,15 +46,6 @@ const MapScreen: React.FC<Props> = props => {
     useEffect(() => {
         window.addEventListener("keyup", handleKeyUp);
 
-        let o = { num: 3 };
-        const a = [
-            [{ num: 3 }, { num: 3 }, { num: 3 }],
-            [{ num: 3 }, { num: 3 }, { num: 3 }],
-            [{ num: 3 }, { num: 3 }, { num: 3 }]
-        ];
-        // a[1][1] = { s: "string" };
-        a[2][1].num = 7;
-        console.debug(a);
         return () => {
             // componentWillUnmount
             window.removeEventListener("keyup", handleKeyUp);
