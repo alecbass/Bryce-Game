@@ -123,4 +123,4 @@ class BattleScreen extends React.PureComponent<Props, BattleState> {
     }
 }
 
-export default connect((state: State) => ({game: state.Game}))(BattleScreen);
+export default connect((state: State) => ({ game: state.Game }))(BattleScreen);

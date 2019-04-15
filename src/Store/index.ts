@@ -8,6 +8,7 @@ import * as fromReducer from "./reducer";
 export interface State {
   Game: fromReducer.Game;
   messages: fromReducer.Messages;
+  rpgMap: fromReducer.RPGMapState;
 }
 
 /*
@@ -15,8 +16,9 @@ export interface State {
  */
 export const initialState: State = {
   Game: fromReducer.initialState,
-  messages: fromReducer.initialMessagesState
-}
+  messages: fromReducer.initialMessagesState,
+  rpgMap: fromReducer.initialRpgMapState
+};
 
 /*
  * Root reducer of the app
@@ -24,7 +26,8 @@ export const initialState: State = {
  */
 export const reducer = combineReducers<State>({
   Game: fromReducer.reducer,
-  messages: fromReducer.messagesReducer
+  messages: fromReducer.messagesReducer,
+  rpgMap: fromReducer.rpgMapReducer
 })
 
 /*

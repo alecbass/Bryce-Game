@@ -2,6 +2,7 @@ import { Fighter } from "Interfaces/Fighter";
 import { Ability } from "Interfaces/Ability";
 import { Item } from "Interfaces/Item";
 import { API } from "Sockets";
+import { number } from "prop-types";
 
 let nextId = 0;
 
@@ -148,3 +149,29 @@ export function receiveMessage(message: API.BaseMessage): ReceiveMessageAction {
 }
 
 export type MessageAction = ReceiveMessageAction;
+
+
+/** RPG Map Exploration */
+export enum RPGMapActionTypes {
+    MOVE = "MOVE",
+}
+
+type DirectionType = "up" | "right" | "down" | "left";
+
+export interface RPGMapMoveAction {
+    type: RPGMapActionTypes.MOVE,
+    payload: {
+        direction: DirectionType
+    }
+}
+
+export function moveOnRpgMap(direction: DirectionType): RPGMapMoveAction {
+    return {
+        type: RPGMapActionTypes.MOVE,
+        payload: {
+            direction
+        }
+    }
+}
+
+export type RPGMapAction = RPGMapMoveAction;

@@ -1,4 +1,4 @@
-import { ActionTypes, Action, MessageAction, MessageActionTypes } from "./actions";
+import { ActionTypes, Action, MessageAction, MessageActionTypes, RPGMapActionTypes, RPGMapAction } from "./actions";
 import { Fighter } from "Interfaces/Fighter";
 import { API } from "Sockets";
 
@@ -198,6 +198,82 @@ export function messagesReducer(state: Messages = initialMessagesState, action: 
 
       return {
         ...state
+      }
+    }
+
+    default: {
+      return state;
+    }
+  }
+}
+
+/** RPG Map */
+export interface RPGMapState {
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+  map: string[];
+}
+
+const map = [
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+  "oooooooooooooooooooo",
+];
+
+export const initialRpgMapState: RPGMapState = {
+  x: 0,
+  y: 0,
+  height: 5,
+  width: 5,
+  map
+};
+
+export function rpgMapReducer(state: RPGMapState = initialRpgMapState, action: RPGMapAction) {
+
+  const { payload } = action;
+
+  switch(action.type) {
+    case RPGMapActionTypes.MOVE: {
+      const { direction } = payload;
+      let x = state.x;
+      let y = state.y;
+      if (direction === "up") {
+        y = Math.min(state.y + 1, state.height);
+        // y++;
+      } else if (direction === "right") {
+        x = Math.min(state.x + 1, state.width);
+        // x++;
+      } else if (direction === "down") {
+        y = Math.max(state.y - 1, 0);
+        // y--;
+      } else if (direction === "left") {
+        x = Math.max(state.x - 1, 0);
+        // x--;
+      }
+      console.debug("x: " + x + "  y: " + y);
+      return {
+        ...state,
+        x: x,
+        y: y
       }
     }
 
