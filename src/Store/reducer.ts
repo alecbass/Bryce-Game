@@ -242,8 +242,8 @@ const map = [
 export const initialRpgMapState: RPGMapState = {
   x: 0,
   y: 0,
-  height: 5,
-  width: 5,
+  height: 10,
+  width: 10,
   map
 };
 

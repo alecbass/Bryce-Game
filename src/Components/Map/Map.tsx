@@ -45,6 +45,16 @@ const MapScreen: React.FC<Props> = props => {
 
     useEffect(() => {
         window.addEventListener("keyup", handleKeyUp);
+
+        let o = { num: 3 };
+        const a = [
+            [{ num: 3 }, { num: 3 }, { num: 3 }],
+            [{ num: 3 }, { num: 3 }, { num: 3 }],
+            [{ num: 3 }, { num: 3 }, { num: 3 }]
+        ];
+        // a[1][1] = { s: "string" };
+        a[2][1].num = 7;
+        console.debug(a);
         return () => {
             // componentWillUnmount
             window.removeEventListener("keyup", handleKeyUp);
@@ -53,7 +63,17 @@ const MapScreen: React.FC<Props> = props => {
 
     function renderTiles() {
         const { x, y, height, width } = props.rpgMap;
-        const mapTiles = new Array<JSX.Element[]>(height).fill(new Array<JSX.Element>(width).fill(<Tile />));
+        // this exists so wethat don't pass by reference
+        const makeTile = () => {
+            return <Tile />;
+        }
+        const mapTiles: JSX.Element[][] = [];
+        for (let i = 0; i < height; i++) {
+            mapTiles.push(new Array<JSX.Element>());
+            for (let j = 0; j < width; j++) {
+                mapTiles[i].push(makeTile());
+            }
+        }
         mapTiles[y][x] = <Tile active={true}/>;
         return mapTiles;
     }
@@ -70,11 +90,13 @@ const MapScreen: React.FC<Props> = props => {
                 break;
             }
             case "ArrowUp": {
-                dispatch(actions.moveOnRpgMap("up"));
+                // invert the y-axis
+                dispatch(actions.moveOnRpgMap("down"));
                 break;
             }
             case "ArrowDown": {
-                dispatch(actions.moveOnRpgMap("down"));
+                // invert the y-axis
+                dispatch(actions.moveOnRpgMap("up"));
                 break;
             }
             default: {
