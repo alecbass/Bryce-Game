@@ -256,20 +256,17 @@ export function rpgMapReducer(state: RPGMapState = initialRpgMapState, action: R
       const { direction } = payload;
       let x = state.x;
       let y = state.y;
+      // when we increase x or y, the limit is the height or width - 1 because of zero-indexing
       if (direction === "up") {
-        y = Math.min(state.y + 1, state.height);
-        // y++;
+        y = Math.min(state.y + 1, state.height - 1) ;
       } else if (direction === "right") {
-        x = Math.min(state.x + 1, state.width);
-        // x++;
+        x = Math.min(state.x + 1, state.width - 1);
       } else if (direction === "down") {
         y = Math.max(state.y - 1, 0);
-        // y--;
       } else if (direction === "left") {
         x = Math.max(state.x - 1, 0);
-        // x--;
       }
-      console.debug("x: " + x + "  y: " + y);
+
       return {
         ...state,
         x: x,
