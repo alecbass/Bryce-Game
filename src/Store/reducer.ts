@@ -217,35 +217,38 @@ export interface RPGMapState {
 }
 
 const map = [
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
-  "oooooooooooooooooooo",
+  "ssssssssssssssssssss",
+  "sggggdgggggggggggggs",
+  "sggggggggggggggggggs",
+  "sggggggggggggggggggs",
+  "sggggggggggggggggggs",
+  "sggggggggdgggggggggs",
+  "sgggggggggggdggggggs",
+  "sggggggdgggggggggggs",
+  "sggggggggggggggggggs",
+  "sgggggggggdggggggggs",
+  "sggggggggegggggggggs",
+  "sggggggggggggggggggs",
+  "sggggggggggggggggggs",
+  "sgggggggggggdggggggs",
+  "sggggggggggggggggggs",
+  "sggggdgggggggggggggs",
+  "sggggggggggggggggggs",
+  "sggggggggggggggggggs",
+  "sggggggggggggggggggs",
+  "ssssssssssssssssssss",
 ];
 
 export const initialRpgMapState: RPGMapState = {
-  x: 0,
-  y: 0,
-  height: 10,
-  width: 10,
+  x: 1,
+  y: 1,
+  height: map.length,
+  width: map[0].length,
   map
 };
+
+// shouldn't be able to walk through these
+const unmoveableTiles = ["s"];
 
 export function rpgMapReducer(state: RPGMapState = initialRpgMapState, action: RPGMapAction) {
 
@@ -265,6 +268,13 @@ export function rpgMapReducer(state: RPGMapState = initialRpgMapState, action: R
         y = Math.max(state.y - 1, 0);
       } else if (direction === "left") {
         x = Math.max(state.x - 1, 0);
+      }
+
+      if (unmoveableTiles.includes(state.map[y][x])) {
+        console.debug("can't move through");
+        return {
+          ...state
+        }
       }
 
       return {
