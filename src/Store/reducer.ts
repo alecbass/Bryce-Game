@@ -208,12 +208,18 @@ export function messagesReducer(state: Messages = initialMessagesState, action: 
 }
 
 /** RPG Map */
+interface MonsterDetail {
+  x: number;
+  y: number;
+}
+
 export interface RPGMapState {
   x: number;
   y: number;
   height: number;
   width: number;
   map: string[];
+  monsters: MonsterDetail[];
 }
 
 const map = [
@@ -239,12 +245,18 @@ const map = [
   "ssssssssssssssssssss",
 ];
 
+const initialMonsters: MonsterDetail[] = [
+  { x: 10, y: 10 },
+  { x: 15, y: 12 }
+];
+
 export const initialRpgMapState: RPGMapState = {
   x: 1,
   y: 1,
   height: map.length,
   width: map[0].length,
-  map
+  map,
+  monsters: initialMonsters
 };
 
 // shouldn't be able to walk through these

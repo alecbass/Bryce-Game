@@ -7,6 +7,9 @@ import { State } from "Store";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/core";
 import { Button } from "reactstrap";
+import { PlayerIcon, MonsterIcon } from "Components/icons";
+import Battle from "Components/BattleFC/Battle";
+import { debug } from "util";
 
 const Map = styled("div")`
   display: flex;
@@ -48,6 +51,8 @@ const Tile = styled<"div", { active?: boolean; backgroundColour?: string }>(
   width: ${TILE_SIZE};
 `;
 
+const player = require("Images/player.png");
+
 interface Props {
   rpgMap: RPGMapState;
   dispatch: any;
@@ -57,22 +62,36 @@ const MapScreen: React.FC<Props> = props => {
   const [ended, setEnded] = useState<boolean>(false);
   const [move, setMove] = useState("");
   const mapRef = useRef(null);
+  const [isInBattle, setIsInBattle] = useState(false);
 
   useEffect(() => {
     // componentWillMount
     window.addEventListener("keyup", handleKeyUp);
     window.addEventListener("keydown", handleKeyDown);
-
     return () => {
       // componentWillUnmount
       window.removeEventListener("keyup", handleKeyUp);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [move]);
+  }, []);
+
+  useEffect(() => {
+    // componentDidUpdate(isInbattle)
+    if (isInBattle) {
+      window.removeEventListener("keyup", handleKeyUp);
+    } else {
+      window.addEventListener("keyup", handleKeyUp);
+    }
+
+    return () => {
+      // the event listener only goes away if this is here
+      window.removeEventListener("keyup", handleKeyUp);
+    }
+  }, [isInBattle]);
 
   function renderTiles() {
-    const { x, y, height, width, map } = props.rpgMap;
-    // this exists so wethat don't pass by reference
+    const { x, y, height, width, map, monsters } = props.rpgMap;
+    // this exists so that we don't pass by reference
     const makeTile = (icon?: string) => {
       let tile = <Tile />;
       if (icon === "d") {
@@ -86,6 +105,8 @@ const MapScreen: React.FC<Props> = props => {
       }
       return tile;
     };
+
+    // create the map's tiles
     const mapTiles: JSX.Element[][] = [];
     for (let i = 0; i < height; i++) {
       mapTiles.push(new Array<JSX.Element>());
@@ -93,7 +114,14 @@ const MapScreen: React.FC<Props> = props => {
         mapTiles[i].push(makeTile(map[i][j]));
       }
     }
-    mapTiles[y][x] = <Tile active={true} />;
+
+    // put the monster tiles on
+    for (let monster of monsters) {
+      mapTiles[monster.y][monster.x] = <MonsterIcon />;
+    }
+
+    // put the player tile on
+    mapTiles[y][x] = <PlayerIcon />;
     return mapTiles;
   }
 
@@ -136,7 +164,6 @@ const MapScreen: React.FC<Props> = props => {
   }
 
   function renderText() {
-
     return ended ? (
       <p>Oh god what is happen</p>
     ) : (
@@ -146,27 +173,63 @@ const MapScreen: React.FC<Props> = props => {
     );
   }
 
+  function renderGridMap() {
+    const { x, y, map, monsters } = props.rpgMap;
+    const nextToEnemy = () => {
+      for (let monster of monsters) {
+        // left or right or above or below
+        if (
+          (monster.x === x - 1 && monster.y === y) ||
+          (monster.x === x + 1 && monster.y === y) ||
+          (monster.x === x && monster.y === y - 1) ||
+          (monster.x === x && monster.y === y + 1)
+        ) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    return (
+      <>
+        <Grid
+          height={props.rpgMap.height}
+          width={props.rpgMap.width}
+          ended={ended}
+        >
+          {renderTiles()}
+        </Grid>
+        {props.rpgMap.map[props.rpgMap.y][props.rpgMap.x] === "e" &&
+          (ended ? (
+            <Button color="info" onClick={() => setEnded(false)}>
+              Return...
+            </Button>
+          ) : (
+            <Button color="danger" onClick={() => setEnded(true)}>
+              End it???
+            </Button>
+          ))}
+        {nextToEnemy() && (
+          <Button color="warning" onClick={() => setIsInBattle(true)}>
+            Attack enemy??
+          </Button>
+        )}
+      </>
+    );
+  }
+
+  function renderBattle() {
+    return <Battle />;
+  }
+
   return (
-    <Map ref={mapRef}>
-      {renderText()}
-      <Grid
-        height={props.rpgMap.height}
-        width={props.rpgMap.width}
-        ended={ended}
-      >
-        {renderTiles()}
-      </Grid>
-      {props.rpgMap.map[props.rpgMap.y][props.rpgMap.x] === "e" &&
-        (ended ? (
-          <Button color="info" onClick={() => setEnded(false)}>
-            Return...
-          </Button>
-        ) : (
-          <Button color="danger" onClick={() => setEnded(true)}>
-            End it???
-          </Button>
-        ))}
-    </Map>
+    <>
+      <Map ref={mapRef}>
+        {renderText()}
+        {isInBattle && renderBattle()}
+        {!isInBattle && renderGridMap()}
+      </Map>
+    </>
   );
 };
 

@@ -2,7 +2,7 @@ import * as React from "react";
 import "../index.css";
 import styled from "@emotion/styled";
 import { Header } from "Components";
-import BattleScreen from "Components/Battle/Battle";
+import BattleScreen from "Components/BattleOld/Battle";
 import { Switch, Route, Link } from "react-router-dom";
 import CharacterCreation from "Components/Creation/CharacterCreation";
 import CharacterSelectionScreen from "Components/CharacterSelection/CharacterSelection";
