@@ -62,7 +62,7 @@ const RPGMap: React.FC<Props> = props => {
   const [ended, setEnded] = useState<boolean>(false);
   const [move, setMove] = useState("");
   const mapRef = useRef(null);
-  const [isInBattle, setIsInBattle] = useState(false);
+  const [isInBattle, setIsInBattle] = useState(true);
   const { map } = useContext(RPGContext);
 
   useEffect(() => {

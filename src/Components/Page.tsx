@@ -49,7 +49,7 @@ class Page extends React.Component<Props> {
                         <Route path="/select" exact={true} component={CharacterSelectionScreen} />
                         <Route path="/cinema" exact={true} component={ScreenCinema} />
                         <Route path="/messages" exact={true} component={ScreenMessages} />
-                        <Route path="/map" exact={true} component={ScreenRPG} />
+                        <Route path="/rpg" exact={true} component={ScreenRPG} />
                         <Link to="/battle">To battle</Link>
                         <Link to="/create">To create</Link>
                         <Link to="/select">To select</Link>

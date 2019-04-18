@@ -16,7 +16,7 @@ export interface RPGMapMoveAction {
 }
 
 const mapReducer = (state: MapContext.RPGMapState = MapContext.initialRpgMapState, action: RPGMapActionTypes) => {
-
+    return null;
     // switch(action.type) {
     //     case RPGMapActionTypes.MOVE: {
     //       const { direction } = payload;

@@ -4,28 +4,39 @@ import * as BattleContext from "./BattleFC/BattleContext";
 import * as BattleReducer from "./BattleFC/BattleReducer";
 
 export interface RPGState {
+    screen: "map" | "battle";
     battle: BattleContext.RPGBattleState;
     map: MapContext.RPGMapState;
+    dispatch: any;
 }
 
 export const initialState: RPGState = {
+    screen: "battle",
     battle: BattleContext.initialBattleState,
-    map: MapContext.initialRpgMapState
+    map: MapContext.initialRpgMapState,
+    dispatch: () => {}
 };
 
-const types = ["ATTACK", "HEAL"];
+const battleTypes = ["ATTACK", "HEAL"];
+const moveTypes = ["MOVE"];
 const reducer = (state: RPGState, action: any) => {
     let returnState = { ...state };
-    switch (action.type) {
-        case action.type in types: {
-            returnState = BattleReducer.battleReducer(state, action);
-            break;
-        }
-        default: {
-            return returnState;
-        }
+
+    const reducerMatches = {
+        battleMatch: battleTypes.includes(action.type),
+        mapMatch: moveTypes.includes(action.type)
+    };
+
+    // most tutorials have this as a switch-case block but not here!!!!!!
+    if (reducerMatches.battleMatch) {
+        returnState = BattleReducer.battleReducer(state, action);
+    } else if (reducerMatches.mapMatch) {
+        returnState = state;
+    } else {
+        returnState = state;
     }
-    return returnState;
+    
+    return { ...returnState };
 }
 
 const RPGContext = React.createContext(initialState);

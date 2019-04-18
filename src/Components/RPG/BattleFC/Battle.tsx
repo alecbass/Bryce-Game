@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
 import { RPGContext } from "../Context";
-import { connect } from "react-redux";
+import Button from "reactstrap/lib/Button";
 
-interface Props {
-    target?: string;
-    dispatch: any;
-}
-
-const Battle: React.FC<Props> = props => {
-    const { battle } = useContext(RPGContext);
-    console.debug(battle);
+const RPGBattle: React.FC = () => {
+    const { battle, dispatch } = useContext(RPGContext);
+    
     return (
-        <div>Battle with {battle.player.name}</div>
+        <div>
+            Battle with {battle.player.name}
+            Health: {battle.player.health}
+            <Button onClick={() => dispatch({ type: "ATTACK" })}>Attack</Button>
+            <Button onClick={() => dispatch({ type: "HEAL" })}>Heal</Button>
+        </div>
     );
 };
 
-export default connect((state) => ({ }))(Battle);
+export default RPGBattle;

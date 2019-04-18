@@ -1,12 +1,14 @@
-import * as React from "react";
-import { RPGContextProvider } from "./Context";
+import React, { useState } from "react";
+import { RPGContext, RPGContextProvider } from "./Context";
 import RPGMap from "./Map/Map";
+import RPGBattle from "./BattleFC/Battle";
 
 const ScreenRPG: React.FC = props => {
-
+    const [isInBattle, setIsInBattle] = useState(true);
     return (
         <RPGContextProvider>
-            <RPGMap />
+            {isInBattle && <RPGBattle />}
+            {!isInBattle && <RPGMap />}
         </RPGContextProvider>
     );
 
