@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { connect } from "react-redux";
 import * as actions from "Store/actions";
 import { RPGMapState } from "Store/reducer";
 import { State } from "Store";
+import { RPGContext } from "../Context";
 
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/core";
 import { Button } from "reactstrap";
 import { PlayerIcon, MonsterIcon } from "Components/icons";
-import Battle from "Components/BattleFC/Battle";
-import { debug } from "util";
+import Battle from "Components/RPG/BattleFC/Battle";
 
 const Map = styled("div")`
   display: flex;
@@ -58,11 +58,12 @@ interface Props {
   dispatch: any;
 }
 
-const MapScreen: React.FC<Props> = props => {
+const RPGMap: React.FC<Props> = props => {
   const [ended, setEnded] = useState<boolean>(false);
   const [move, setMove] = useState("");
   const mapRef = useRef(null);
   const [isInBattle, setIsInBattle] = useState(false);
+  const { map } = useContext(RPGContext);
 
   useEffect(() => {
     // componentWillMount
@@ -219,7 +220,12 @@ const MapScreen: React.FC<Props> = props => {
   }
 
   function renderBattle() {
-    return <Battle />;
+    return (
+      <>
+        <Battle />
+        <Button onClick={() => setIsInBattle(false)}>Go back to the map</Button>
+      </>
+    );
   }
 
   return (
@@ -233,4 +239,4 @@ const MapScreen: React.FC<Props> = props => {
   );
 };
 
-export default connect((state: State) => ({ rpgMap: state.rpgMap }))(MapScreen);
+export default connect((state: State) => ({ rpgMap: state.rpgMap }))(RPGMap);

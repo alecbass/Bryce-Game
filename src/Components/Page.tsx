@@ -8,7 +8,7 @@ import CharacterCreation from "Components/Creation/CharacterCreation";
 import CharacterSelectionScreen from "Components/CharacterSelection/CharacterSelection";
 import ScreenCinema from "./Cinema/Cinema";
 import ScreenMessages from "./Messaging/Message";
-import ScreenMap from "Components//Map/Map";
+import ScreenRPG from "Components/RPG/RPG";
 import { connect } from "react-redux";
 import { State } from "Store";
 import { User } from "Store/reducer";
@@ -49,7 +49,7 @@ class Page extends React.Component<Props> {
                         <Route path="/select" exact={true} component={CharacterSelectionScreen} />
                         <Route path="/cinema" exact={true} component={ScreenCinema} />
                         <Route path="/messages" exact={true} component={ScreenMessages} />
-                        <Route path="/map" exact={true} component={ScreenMap} />
+                        <Route path="/map" exact={true} component={ScreenRPG} />
                         <Link to="/battle">To battle</Link>
                         <Link to="/create">To create</Link>
                         <Link to="/select">To select</Link>
