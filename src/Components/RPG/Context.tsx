@@ -18,24 +18,20 @@ export const initialState: RPGState = {
 };
 
 const battleTypes = ["ATTACK", "HEAL"];
-const moveTypes = ["MOVE"];
+const mapTypes = ["MOVE"];
 const reducer = (state: RPGState, action: any) => {
     let returnState = { ...state };
-
-    const reducerMatches = {
-        battleMatch: battleTypes.includes(action.type),
-        mapMatch: moveTypes.includes(action.type)
-    };
+    const { type } = action;
 
     // most tutorials have this as a switch-case block but not here!!!!!!
-    if (reducerMatches.battleMatch) {
+    if (battleTypes.includes(type)) {
         returnState = BattleReducer.battleReducer(state, action);
-    } else if (reducerMatches.mapMatch) {
+    } else if (mapTypes.includes(type)) {
         returnState = state;
     } else {
         returnState = state;
     }
-    
+
     return { ...returnState };
 }
 
