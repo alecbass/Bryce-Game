@@ -1,14 +1,24 @@
 import React, { useState } from "react";
-import { RPGContext, RPGContextProvider } from "./Context";
+import { RPGContextProvider } from "./Context";
 import RPGMap from "./Map/Map";
 import RPGBattle from "./BattleFC/Battle";
+import styled from "@emotion/styled";
+
+const RPGContainer = styled("div")`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+`;
 
 const ScreenRPG: React.FC = props => {
     const [isInBattle, setIsInBattle] = useState(true);
     return (
         <RPGContextProvider>
-            {isInBattle && <RPGBattle />}
-            {!isInBattle && <RPGMap />}
+            <RPGContainer>
+                {isInBattle && <RPGBattle />}
+                {!isInBattle && <RPGMap />}
+            </RPGContainer>
         </RPGContextProvider>
     );
 
