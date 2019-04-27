@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { RPGContextProvider } from "../../store/Context";
+import React, { useState, useContext } from "react";
+import { RPGContextProvider, RPGContext } from "../../store/Context";
 import RPGMap from "./Map/Map";
 import RPGBattle from "./BattleFC/Battle";
 import styled from "@emotion/styled";
@@ -12,14 +12,12 @@ const RPGContainer = styled("div")`
 `;
 
 const ScreenRPG: React.FC = () => {
-    const [isInBattle, setIsInBattle] = useState(false);
+    const { screen } = useContext(RPGContext);
     return (
-        <RPGContextProvider>
             <RPGContainer>
-                {isInBattle && <RPGBattle />}
-                {!isInBattle && <RPGMap />}
+                {screen === "battle" && <RPGBattle />}
+                {screen === "map" && <RPGMap />}
             </RPGContainer>
-        </RPGContextProvider>
     );
 
 }

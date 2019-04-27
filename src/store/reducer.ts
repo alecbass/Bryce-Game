@@ -1,28 +1,40 @@
 import * as MapContext from "./MapContext";
 import { RPGState } from "./Context";
 
+// BATTLE ACTIONS
+export enum RPGBattleActionTypes {
+    ATTACK = "ATTACK",
+    HEAL = "HEAL"
+}
 
-const battleTypes = ["ATTACK", "HEAL"];
+export interface RPGBattleAction {
+    type: RPGBattleActionTypes,
+    payload: object
+}
+
 const battleReducer = (state: RPGState, action: any) => {
     const { battle } = state;
-
+    const { player } = battle;
     switch(action.type) {
-        case "ATTACK": {
-            battle.player.health -= 1;
+        case RPGBattleActionTypes.ATTACK: {
+            player.health -= 1;
+            if (player.health <= 0) {
+                state.screen = "map";
+            }
             return state;
         }
-        case "HEAL": {
-            battle.player.health += 1;
+        case RPGBattleActionTypes.HEAL: {
+            player.health += 1;
             return state;
         }
         default: {
-            battle.player.name += "REDUCED";
+            player.name += "REDUCED";
             return state;
         }
     }
 }
 
-// ACTIONS
+// MAP ACTIONS
 export enum RPGMapActionTypes {
     MOVE = "MOVE"
 }
@@ -36,7 +48,6 @@ export interface RPGMapMoveAction {
     }
 }
 
-const mapTypes = ["MOVE"];
 const mapReducer = (state: RPGState, action: RPGMapMoveAction) => {
     if (typeof action !== "object") {
         return state;
@@ -80,16 +91,38 @@ const mapReducer = (state: RPGState, action: RPGMapMoveAction) => {
       }
 }
 
+// basic actions
+export enum BaseRPGActionTypes {
+    CHANGE_SCREEN = "CHANGE_SCREEN"
+}
+
+export interface RPGChangeScreenAction {
+    type: BaseRPGActionTypes.CHANGE_SCREEN;
+    payload: {
+        screen: "map" | "battle";
+    }
+}
+
+const basicReducer = (state: RPGState, action: RPGChangeScreenAction) => {
+    
+    return {
+        ...state,
+        screen: action.payload.screen
+    }
+}
+
 const reducer = (state: RPGState, action: any) => {
 
     let returnState = { ...state };
     const { type } = action;
 
     // most tutorials have this as a switch-case block but not here!!!!!!
-    if (battleTypes.includes(type)) {
+    if (type in RPGBattleActionTypes) {
         returnState = battleReducer(state, action);
-    } else if (mapTypes.includes(type)) {
+    } else if (type in RPGMapActionTypes) {
         returnState = mapReducer(state, action);
+    } else if (type in BaseRPGActionTypes) {
+        returnState = basicReducer(state, action);
     } else {
         returnState = state;
     }

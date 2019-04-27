@@ -11,7 +11,7 @@ export interface RPGState {
 }
 
 export const initialState: RPGState = {
-    screen: "battle",
+    screen: "map",
     battle: BattleContext.initialBattleState,
     map: MapContext.initialRpgMapState,
     dispatch: () => {}

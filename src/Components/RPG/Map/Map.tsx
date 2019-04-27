@@ -112,27 +112,23 @@ const RPGMap: React.FC = () => {
   }
 
   function handleKeyUp(e: KeyboardEvent) {
-    console.debug(e.key);
+
     switch (e.key) {
       case "ArrowLeft": {
-        // dispatch(actions.moveOnRpgMap("left"));
         dispatch({ type: "MOVE", payload: { direction: "left" } });
         break;
       }
       case "ArrowRight": {
-        // dispatch(actions.moveOnRpgMap("right"));
         dispatch({ type: "MOVE", payload: { direction: "right" } });
         break;
       }
       case "ArrowUp": {
         // invert the y-axis
-        // dispatch(actions.moveOnRpgMap("down"));
         dispatch({ type: "MOVE", payload: { direction: "down" } });
         break;
       }
       case "ArrowDown": {
         // invert the y-axis
-        // dispatch(actions.moveOnRpgMap("up"));
         dispatch({ type: "MOVE", payload: { direction: "up" } });
         break;
       }
@@ -190,7 +186,7 @@ const RPGMap: React.FC = () => {
             </Button>
           ))}
         {nextToEnemy() && (
-          <Button color="warning">
+          <Button color="warning" onClick={() => dispatch({ type: "CHANGE_SCREEN", payload: { screen: "battle" } })}>
             Attack enemy??
           </Button>
         )}
