@@ -10,8 +10,8 @@ import ScreenCinema from "./Cinema/Cinema";
 import ScreenMessages from "./Messaging/Message";
 import ScreenRPG from "Components/RPG/RPG";
 import { connect } from "react-redux";
-import { State } from "Store";
-import { User } from "Store/reducer";
+import { State } from "reduxStore";
+import { User } from "reduxStore/reducer";
 
 const Container = styled("div")`
     display: flex;

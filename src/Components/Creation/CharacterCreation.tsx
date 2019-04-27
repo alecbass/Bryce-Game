@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Game } from "Store/reducer";
+import { Game } from "reduxStore/reducer";
 import { connect } from "react-redux";
-import { State } from "Store";
-import * as actions from "Store/actions";
+import { State } from "reduxStore";
+import * as actions from "reduxStore/actions";
 import { Fighter } from "Interfaces/Fighter";
 
 

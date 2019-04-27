@@ -1,7 +1,7 @@
 import * as React from "react";
-import * as MapContext from "./Map/MapContext";
-import * as BattleContext from "./BattleFC/BattleContext";
-import * as BattleReducer from "./BattleFC/BattleReducer";
+import * as MapContext from "./MapContext";
+import * as BattleContext from "./BattleContext";
+import * as BattleReducer from "./BattleReducer";
 
 export interface RPGState {
     screen: "map" | "battle";

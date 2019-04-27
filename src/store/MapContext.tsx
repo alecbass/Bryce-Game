@@ -1,5 +1,3 @@
-import * as React from "react";
-
 /** RPG Map */
 interface MonsterDetail {
   x: number;

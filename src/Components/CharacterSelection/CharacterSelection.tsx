@@ -1,12 +1,12 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { State } from "Store";
+import { State } from "reduxStore";
 import { Fighter } from "Interfaces/Fighter";
-import { Game } from "Store/reducer";
+import { Game } from "reduxStore/reducer";
 import CharacterIcon from "./CharacterIcon";
 import styled from "@emotion/styled";
 import { Button } from "reactstrap";
-import * as actions from "Store/actions";
+import * as actions from "reduxStore/actions";
 
 const avatar = require("Images/avatar.png");
 

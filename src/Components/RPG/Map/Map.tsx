@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { connect } from "react-redux";
-import * as actions from "Store/actions";
-import { RPGMapState } from "Store/reducer";
-import { State } from "Store";
-import { RPGContext } from "../Context";
+import * as actions from "reduxStore/actions";
+import { RPGMapState } from "reduxStore/reducer";
+import { State } from "reduxStore";
+import { RPGContext } from "../../../store/Context";
 
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/core";

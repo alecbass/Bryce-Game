@@ -1,4 +1,4 @@
-import { RPGState } from "../Context";
+import { RPGState } from "./Context";
 
 export const battleReducer = (state: RPGState, action: any) => {
     const { battle } = state;

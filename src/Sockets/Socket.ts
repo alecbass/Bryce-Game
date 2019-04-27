@@ -1,7 +1,7 @@
 import BaseSocket from "./BaseSocket";
 
-import store from "../Store/index";
-import * as actions from "../Store/actions";
+import store from "../reduxStore/index";
+import * as actions from "../reduxStore/actions";
 import { API } from "../Sockets";
 
 // const url ="ws://192.168.0.4:3002";

@@ -4,7 +4,7 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import registerServiceWorker from './registerServiceWorker';
 import { Page } from "./Components";
-import store from "./Store/index";
+import store from "./reduxStore/index";
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from "react-router-dom";
 import { socket } from "./Sockets";

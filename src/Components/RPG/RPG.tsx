@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { RPGContextProvider } from "./Context";
+import { RPGContextProvider } from "../../store/Context";
 import RPGMap from "./Map/Map";
 import RPGBattle from "./BattleFC/Battle";
 import styled from "@emotion/styled";
@@ -12,7 +12,7 @@ const RPGContainer = styled("div")`
 `;
 
 const ScreenRPG: React.FC = props => {
-    const [isInBattle, setIsInBattle] = useState(true);
+    const [isInBattle, setIsInBattle] = useState(false);
     return (
         <RPGContextProvider>
             <RPGContainer>

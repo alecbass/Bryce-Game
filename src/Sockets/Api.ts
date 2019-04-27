@@ -1,5 +1,5 @@
 import Socket from "./Socket";
-import { User } from "Store/reducer";
+import { User } from "reduxStore/reducer";
 
 export interface BaseMessage {
     type: "signon" | "message" | "signoff" | "refresh" | "login";

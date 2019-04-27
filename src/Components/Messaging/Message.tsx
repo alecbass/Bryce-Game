@@ -1,10 +1,10 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { State } from "Store";
+import { State } from "reduxStore";
 import styled from "@emotion/styled";
 import { Message, LoginMessage } from "Sockets/Api";
 import { API } from "Sockets";
-import { User } from "Store/reducer";
+import { User } from "reduxStore/reducer";
 
 const alec = require("../../Images/me_orchestra.jpg");
 

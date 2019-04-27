@@ -5,9 +5,9 @@ import BattleDisplay from "./BattleDisplay";
 
 import { Fighter } from "Interfaces/Fighter";
 import { connect } from "react-redux";
-import { Game } from "Store/reducer";
-import * as actions from "Store/actions";
-import { State } from "Store";
+import { Game } from "reduxStore/reducer";
+import * as actions from "reduxStore/actions";
+import { State } from "reduxStore";
 import { Ability } from "Interfaces/Ability";
 import { Item } from "Interfaces/Item";
 

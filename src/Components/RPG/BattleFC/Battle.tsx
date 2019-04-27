@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { RPGContext } from "../Context";
+import { RPGContext } from "../../../store/Context";
 import Button from "reactstrap/lib/Button";
 import styled from "@emotion/styled";
 import { clearSelection } from "../utils";
