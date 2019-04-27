@@ -11,7 +11,7 @@ const RPGContainer = styled("div")`
     justify-content: flex-start;
 `;
 
-const ScreenRPG: React.FC = props => {
+const ScreenRPG: React.FC = () => {
     const [isInBattle, setIsInBattle] = useState(false);
     return (
         <RPGContextProvider>

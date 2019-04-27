@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as MapContext from "./MapContext";
+import reducer from "./reducer";
 import * as BattleContext from "./BattleContext";
-import * as BattleReducer from "./BattleReducer";
 
 export interface RPGState {
     screen: "map" | "battle";
@@ -16,24 +16,6 @@ export const initialState: RPGState = {
     map: MapContext.initialRpgMapState,
     dispatch: () => {}
 };
-
-const battleTypes = ["ATTACK", "HEAL"];
-const mapTypes = ["MOVE"];
-const reducer = (state: RPGState, action: any) => {
-    let returnState = { ...state };
-    const { type } = action;
-
-    // most tutorials have this as a switch-case block but not here!!!!!!
-    if (battleTypes.includes(type)) {
-        returnState = BattleReducer.battleReducer(state, action);
-    } else if (mapTypes.includes(type)) {
-        returnState = state;
-    } else {
-        returnState = state;
-    }
-
-    return { ...returnState };
-}
 
 const RPGContext = React.createContext(initialState);
 

@@ -8,14 +8,17 @@ import store from "./reduxStore/index";
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from "react-router-dom";
 import { socket } from "./Sockets";
+import { RPGContextProvider } from 'store/Context';
 
 socket.open();
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <Page />
-    </Router>
+    <RPGContextProvider>
+      <Router>
+        <Page />
+      </Router>
+    </RPGContextProvider>
   </Provider>,
   document.getElementById("root") as HTMLElement
 );
