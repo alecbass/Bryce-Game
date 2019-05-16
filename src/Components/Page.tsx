@@ -40,7 +40,7 @@ class Page extends React.Component<Props> {
 
         return (
             <Container>
-                <Header title="Battle of Bryce" />
+                <Header title="Brycraft React" />
                 <Main>
                     <Switch>
                         <Route path="/" exact={true} component={ScreenMessages} />
